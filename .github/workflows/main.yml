@@ -1,27 +1,28 @@
-name: Test Job
-on: 
-  pull_request_target:
-      types: [opened, labeled, unlabeled, synchronize]
+name: Test Job  
 
-permissions:
-  pull-requests: write
-
-jobs:
-  checkout-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v3
-        with:
-           python-version: "3.10"
-      - name: Checkout repo
-        uses: actions/checkout@master
-        with:
-          fetch-depth: 0 # checkout all branches
-          ref: ${{github.event.pull_request.head.ref}}
-          repository: ${{github.event.pull_request.head.repo.full_name}}
-      - name: Run some things
-        run: |
-           pwd
-           ls
-           python test.py
+on:  
+  workflow_dispatch:  
+    inputs:  
+      environment:  
+        description: 'Which environment to deploy to'  
+        required: true  
+        default: 'production'  
+      deploy_version:  
+        description: 'Version to deploy'  
+        required: false  
+  
+jobs:  
+  deploy:  
+    runs-on: ubuntu-latest  
+      
+    steps:  
+    - name: Checkout repository  
+      uses: actions/checkout@v2  
+  
+    - name: Print inputs  
+      run: |  
+        echo "Deploying to environment: ${{ github.event.inputs.environment }}"  
+        echo "Deploying version: ${{ github.event.inputs.deploy_version }}"
+        pwd
+        ls
+        python test.py
