@@ -27,4 +27,4 @@ jobs:
       - name: Run Python script  
         run: |
            pip install requests
-           python test.py "${{ secrets.poptartpat }}
+           python test.py "${{ secrets.poptartpat }}"
