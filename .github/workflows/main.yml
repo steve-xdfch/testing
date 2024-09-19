@@ -1,28 +1,28 @@
 name: Test Job  
-
-on:  
-  workflow_dispatch:  
-    inputs:  
-      environment:  
-        description: 'Which environment to deploy to'  
-        required: true  
-        default: 'production'  
-      deploy_version:  
-        description: 'Version to deploy'  
-        required: false  
+on:   
+  pull_request_target:  
+  
+permissions:  
+  pull-requests: write  # Grant write permissions to pull requests  
   
 jobs:  
   deploy:  
     runs-on: ubuntu-latest  
-      
-    steps:  
-    - name: Checkout repository  
-      uses: actions/checkout@v2  
   
-    - name: Print inputs  
-      run: |  
-        echo "Deploying to environment: ${{ github.event.inputs.environment }}"  
-        echo "Deploying version: ${{ github.event.inputs.deploy_version }}"
-        pwd
-        ls
-        python test.py
+    steps:  
+      - name: Checkout repository  
+        uses: actions/checkout@v2  
+  
+      - name: Print inputs  
+        run: |  
+          echo "Deploying to environment: ${{ github.event.inputs.environment }}"  
+          echo "Deploying version: ${{ github.event.inputs.deploy_version }}"  
+          pwd  
+          ls  
+  
+      - name: Use repository secret  
+        run: |  
+          echo "example command"
+          
+      - name: Run Python script  
+        run: python test.py "${{ secrets.poptartpat }}
