@@ -2,6 +2,9 @@ name: Test Job
   
 on:  
   pull_request: 
+
+permissions:  
+  pull-requests: write
   
 jobs:  
   deploy:  
