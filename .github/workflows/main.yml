@@ -1,11 +1,10 @@
 name: Test Job  
   
 on:
-  [workflow_dispatch]
-  #pull_request_target:  
+  pull_request_target:  
   
 permissions:  
-  pull-requests: write  # Grant write permissions to pull requests  
+  pull-requests: write 
   
 jobs:  
   deploy:  
